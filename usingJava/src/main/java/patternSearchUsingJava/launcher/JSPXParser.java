@@ -48,8 +48,6 @@ public class JSPXParser {
 			}
 			if (line.contains("</tr>")) {
 				line = line.replaceAll("</tr>", "");
-				
-				
 			}
 			lines.add(line);
 			
