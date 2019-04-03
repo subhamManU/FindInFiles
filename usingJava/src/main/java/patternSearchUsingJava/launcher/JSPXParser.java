@@ -21,46 +21,39 @@ public class JSPXParser {
 		ArrayList<String> lines = new ArrayList<>();
 		int i_td = 0;
 		int i_close_td = 0;
-		boolean table_open = false;
 		Scanner sc = new Scanner(new File(filePath));
 		String line = null;
 		while (sc.hasNextLine()) {
 			line = sc.nextLine();
-			if (line.contains("<table class=\"tableStyle sixCol table-layout-override\">"))
-				table_open = true;
-			
-			if (line.contains("</table>") || table_open) {
-				if (line.contains("<tr>")) {
-					line = line.replaceAll("<tr>", "");
-				}
-				if (line.contains("<td>")) {
-					if (i_td == 0) {
-						line = line.replaceAll("<td>", "<li>");
-						i_td = 1;
-					} else {
-						line = line.replace("<td>", "");
-						i_td = 0;
-					}
-				}
-				if (line.contains("</td>")) {
-					if (i_close_td == 0) {
-						line = line.replaceAll("</td>", "");
-						i_close_td = 1;
-					} else {
-						line = line.replaceAll("</td>", "</li>");
-						i_close_td = 0;
-					}
-				}
-				if (line.contains("</tr>")) {
-					line = line.replaceAll("</tr>", "");
+			if (line.contains("<tr>")) {
+				line = line.replaceAll("<tr>", "");
+			}
+			if (line.contains("<td>")) {
+				if (i_td == 0) {
+					line = line.replaceAll("<td>", "<li>");
+					i_td = 1;
+				} else {
+					line = line.replace("<td>", "");
+					i_td = 0;
 				}
 			}
-			
-			
-			
+			if (line.contains("</td>")) {
+				if (i_close_td == 0) {
+					line = line.replaceAll("</td>", "");
+					i_close_td = 1;
+				} else {
+					line = line.replaceAll("</td>", "</li>");
+					i_close_td = 0;
+				}
+			}
+			if (line.contains("</tr>")) {
+				line = line.replaceAll("</tr>", "");
+				
+				
+			}
 			lines.add(line);
-
-			// lines.removeAll(Collections.singleton(""));
+			
+			//lines.removeAll(Collections.singleton(""));
 
 		}
 		sc.close();
